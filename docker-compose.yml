@@ -93,6 +93,8 @@ services:
   tyr_beat:
     image: navitia/tyr-beat:${TAG}
     environment:
+      - TYR_CITIES_DATABASE_HOST=navitia_cities_database
+      - TYR_ED_DATABASE_HOST=navitia_database
       - TYR_CITIES_DATABASE_URI=postgresql://navitia:navitia@navitia_cities_database/cities
       - TYR_CITIES_OSM_FILE_PATH=/srv/ed/
       - TYR_CELERY_BROKER_URL=amqp://guest:guest@navitia_rabbitmq:5672//
@@ -100,6 +102,29 @@ services:
       - TYR_SQLALCHEMY_DATABASE_URI=postgresql://navitia:navitia@navitia_database/jormungandr
       - TYR_REDIS_HOST=navitia_redis
       - TYR_INSTANCES_DIR=/etc/tyr.d
+      - | 
+        TYR_INSTANCE_exemplary_coverage_not_in_artemis=
+        {
+          "instance": {
+            "name": "fr-se-lyon",
+            "source-directory": "/ed/source/dummy_coverage",
+            "backup-directory": "/ed/backup/dummy_coverage",
+            "aliases_file": "/ed/aliases",
+            "synonyms_file": "/ed/synonyms",
+            "target-file": "/ed/target_file/dummy_coverage",
+            "tmp_file": "/ed/tmp_file/dummy_coverage",
+            "is-free": true,
+            "exchange": "exchange"
+          },
+          "database": {
+            "host": "navitia_database",
+            "dbname": "ed_dummy_coverage",
+            "username": "user1",
+            "password": "pass1",
+            "port": 5432
+          }
+        }
+
     volumes:
       - tyr_data:/srv/ed
       - tyr_instance_conf:/etc/tyr.d

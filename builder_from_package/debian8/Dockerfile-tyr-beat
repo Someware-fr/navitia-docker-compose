@@ -17,7 +17,6 @@ RUN pip install --no-cache-dir -r /usr/share/tyr/requirements.txt
 # install postgresql-client
 RUN apt-get install -y postgresql-client
 
-
 COPY run_tyr_beat.sh /
 RUN chmod +x /run_tyr_beat.sh
 
