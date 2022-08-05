@@ -20,4 +20,4 @@ RUN chmod +x /usr/src/app/run.sh
 
 RUN ln -s /usr/share/tyr/migrations migrations
 
-ENTRYPOINT [ "/usr/src/app/run.sh" ]
+CMD ["bash", "/usr/src/app/run.sh" ]
