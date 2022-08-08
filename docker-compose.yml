@@ -68,6 +68,7 @@ services:
     ports:
       - "80:80"
     depends_on:
+      - tyr_web
       - database
       - redis
 
@@ -86,6 +87,7 @@ services:
       - TYR_REDIS_HOST=navitia_redis
       - TYR_INSTANCES_DIR=/etc/tyr.d
     depends_on:
+      - tyr_web
       - database
       - cities_database
 
@@ -103,6 +105,7 @@ services:
       - tyr_data:/srv/ed
       - tyr_instance_conf:/etc/tyr.d
     depends_on:
+      - tyr_web
       - database
       - cities_database
 
