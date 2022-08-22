@@ -46,29 +46,37 @@ wait_for_db ${TYR_CITIES_DATABASE_HOST}
 # db migration for cities db
 upgrade_cities_db ${TYR_CITIES_DATABASE_URI}
 
+env
+
+tree /ed
+
 echo "updating ed db"
 # db migration for each instance
-for var in "${!TYR_INSTANCE_@}"; do
-  printf -v config "${!var}";
-  echo $config
-  instance_name=$(echo $config | jq -r '.instance.name');
-  echo "creating ed directories for ${instance_name}"
 
-  mkdir -p  $(echo $config | jq -r '.instance."source-directory"') && \
-  mkdir -p  $(echo $config | jq -r '.instance."backup-directory"') && \
-  mkdir -p  $(echo $config | jq -r '.instance."alias_file"') && \
-  mkdir -p  $(echo $config | jq -r '.instance."synonyms_file"') && \
-  mkdir -p  $(echo $config | jq -r '.instance."tmp_file"') && \
-  echo "ed directories for ${instance_name} are created"
+while read var ; do
+  if [[ $var == 'TYR_INSTANCE_'* ]]; then
+    config=`echo $var | cut -d "=" -f 2`
+    echo $config
+    instance_name=$(echo $config | jq -r '.instance.name');
+    echo "creating ed directories for ${instance_name}"
 
-  db_host=$(echo $config | jq -r '.database.host')
-  dbname=$(echo $config | jq -r '.database.dbname')
-  user=$(echo $config | jq -r '.database.username')
-  pwd=$(echo $config | jq -r '.database.password')
-  port=$(echo $config | jq -r '.database.port')
+    mkdir -p  $(echo $config | jq -r '.instance."source-directory"') && \
+    mkdir -p  $(echo $config | jq -r '.instance."backup-directory"') && \
+    mkdir -p  $(echo $config | jq -r '.instance."alias_file"') && \
+    mkdir -p  $(echo $config | jq -r '.instance."synonyms_file"') && \
+    mkdir -p  $(echo $config | jq -r '.instance."tmp_file"') && \
+    mkdir -p  $(echo $config | jq -r '.instance."target_file"') && \
+    echo "ed directories for ${instance_name} are created"
 
-  ed_db_config $dbname $user $pwd $db_host $port
-done
+    db_host=$(echo $config | jq -r '.database.host')
+    dbname=$(echo $config | jq -r '.database.dbname')
+    user=$(echo $config | jq -r '.database.username')
+    pwd=$(echo $config | jq -r '.database.password')
+    port=$(echo $config | jq -r '.database.port')
+
+    ed_db_config $dbname $user $pwd $db_host $port
+  fi
+done < <(env)
 
 
 exec celery beat -A tyr.tasks
