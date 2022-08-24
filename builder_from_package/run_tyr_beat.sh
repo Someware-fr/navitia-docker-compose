@@ -60,12 +60,12 @@ while read var ; do
     instance_name=$(echo $config | jq -r '.instance.name');
     echo "creating ed directories for ${instance_name}"
 
-    mkdir -p  $(echo $config | jq -r '.instance."source-directory"') && \
-    mkdir -p  $(echo $config | jq -r '.instance."backup-directory"') && \
-    mkdir -p  $(echo $config | jq -r '.instance."alias_file"') && \
-    mkdir -p  $(echo $config | jq -r '.instance."synonyms_file"') && \
-    mkdir -p  $(echo $config | jq -r '.instance."tmp_file"') && \
-    mkdir -p  $(echo $config | jq -r '.instance."target_file"') && \
+    mkdir -p  $(echo $config | jq -r '.instance."source-directory"')
+    mkdir -p  $(echo $config | jq -r '.instance."backup-directory"')
+    mkdir -p  $(echo $config | jq -r '.instance."alias_file"')
+    mkdir -p  $(echo $config | jq -r '.instance."synonyms_file"')
+    mkdir -p  $(echo $config | jq -r '.instance."tmp_file"')
+    mkdir -p  $(echo $config | jq -r '.instance."target_file"')
     echo "ed directories for ${instance_name} are created"
 
     db_host=$(echo $config | jq -r '.database.host')
