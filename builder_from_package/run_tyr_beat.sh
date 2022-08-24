@@ -46,8 +46,6 @@ wait_for_db ${TYR_CITIES_DATABASE_HOST}
 # db migration for cities db
 upgrade_cities_db ${TYR_CITIES_DATABASE_URI}
 
-env
-
 tree /ed
 
 echo "updating ed db"
@@ -64,8 +62,6 @@ while read var ; do
     mkdir -p  $(echo $config | jq -r '.instance."backup-directory"')
     mkdir -p  $(echo $config | jq -r '.instance."alias_file"')
     mkdir -p  $(echo $config | jq -r '.instance."synonyms_file"')
-    mkdir -p  $(echo $config | jq -r '.instance."tmp_file"')
-    mkdir -p  $(echo $config | jq -r '.instance."target_file"')
     echo "ed directories for ${instance_name} are created"
 
     db_host=$(echo $config | jq -r '.database.host')
