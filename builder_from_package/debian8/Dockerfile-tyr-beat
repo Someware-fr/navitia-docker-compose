@@ -3,6 +3,9 @@ FROM navitia/master
 COPY navitia-common_*.deb ./
 COPY navitia-tyr_*.deb ./
 
+RUN apt-get update \
+    && apt install -y jq tree
+
 # used for data migrations
 COPY navitia/source/sql/alembic /usr/share/navitia/ed/alembic
 COPY navitia/source/sql/requirements.txt /tmp/requirements.txt
@@ -17,6 +20,9 @@ RUN apt-get install -f -y
 RUN dpkg -i ./navitia-tyr_*.deb || exit 0
 RUN apt-get install -f -y
 
+# install ed migrations requirements
+RUN pip install -r /tmp/requirements.txt
+
 # install tyr requirements
 RUN pip install --no-cache-dir -r /usr/share/tyr/requirements.txt
 
@@ -27,4 +33,4 @@ COPY run_tyr_beat.sh /
 RUN chmod +x /run_tyr_beat.sh
 
 WORKDIR /usr/share/tyr/
-CMD ["sh", "/run_tyr_beat.sh"]
+CMD ["bash", "/run_tyr_beat.sh"]
