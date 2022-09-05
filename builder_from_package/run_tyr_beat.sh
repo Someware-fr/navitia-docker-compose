@@ -8,11 +8,11 @@ ed_db_config() {
   port=$5
 
   # database schema migration
-  alembic_file=/tmp/${instance_name}_ed_migration.ini
+  alembic_file=/tmp/${dbname}_ed_migration.ini
   INSTANCE=$dbname USER=$user PASSWORD=$password DATABASE_HOST=$db_host PORT=$port envsubst < /templates/ed_migration.ini > $alembic_file
   alembic -c $alembic_file upgrade head
 
-  echo "ed db: ${instance_name} upgraded"
+  echo "ed db: ${dbname} upgraded"
 }
 
 upgrade_cities_db() {
@@ -55,14 +55,6 @@ while read var ; do
   if [[ $var == 'TYR_INSTANCE_'* ]]; then
     config=`echo $var | cut -d "=" -f 2`
     echo $config
-    instance_name=$(echo $config | jq -r '.instance.name');
-    echo "creating ed directories for ${instance_name}"
-
-    mkdir -p  $(echo $config | jq -r '.instance."source-directory"')
-    mkdir -p  $(echo $config | jq -r '.instance."backup-directory"')
-    mkdir -p  $(echo $config | jq -r '.instance."alias_file"')
-    mkdir -p  $(echo $config | jq -r '.instance."synonyms_file"')
-    echo "ed directories for ${instance_name} are created"
 
     db_host=$(echo $config | jq -r '.database.host')
     dbname=$(echo $config | jq -r '.database.dbname')
