@@ -1,6 +1,6 @@
 FROM navitia/master
 
-COPY navitia-common_*deb navitia-tyr_*.deb navitia-ed_*.deb navitia-cities_*.deb mimirsbrunn_buster-*.deb cosmogony2cities_*.deb ./
+COPY navitia-common_*deb navitia-tyr_*.deb navitia-ed_*.deb navitia-cities_*.deb mimirsbrunn7_buster-*.deb cosmogony2cities_*.deb ./
 
 RUN apt-get update \
     && apt install -y python python-pip git libgeos-c1v5 libpq5 tree\
