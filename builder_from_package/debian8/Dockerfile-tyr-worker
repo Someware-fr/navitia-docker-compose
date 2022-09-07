@@ -4,7 +4,7 @@ COPY navitia-common_*deb ./
 COPY navitia-tyr_*.deb ./
 COPY navitia-ed_*.deb ./
 COPY navitia-cities_*.deb ./
-COPY mimirsbrunn_*.deb ./
+COPY mimirsbrunn7_*.deb ./
 COPY cosmogony2cities_*.deb ./
 
 # install navitia-common package
@@ -24,7 +24,7 @@ RUN dpkg -i ./navitia-cities_*.deb || exit 0
 RUN apt-get install -f -y
 
 # install navitia-mimirsbrunn package
-RUN dpkg -i ./mimirsbrunn_jessie-*.deb || exit 0
+RUN dpkg -i ./mimirsbrunn7_jessie-*.deb || exit 0
 RUN apt-get install -f -y
 
 # install cosmogony2cities package

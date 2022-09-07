@@ -174,7 +174,7 @@ rm -f navitia*.deb
 unzip -qo ${inside_archive} -d .
 
 # let's download mimirsbrunn package
-python core_team_ci_tools/github_artifacts/github_artifacts.py -o hove-io -r mimirsbrunn -t $token -w release.yml -a $mimirsbrunn_package --output-dir .
+python core_team_ci_tools/github_artifacts/github_artifacts.py -o hove-io -r mimirsbrunn -t $token -w release7.yml -a $mimirsbrunn_package --output-dir .
 unzip -qo $mimirsbrunn_package
 # we select mimirsbrunn_jessie-*.deb
 rm -f $mimirsbrunn_package
@@ -207,9 +207,6 @@ for component in $components; do
         run docker tag navitia/$component:$version navitia/$component:$tag
     fi
 done
-
-
-
 
 # push image to docker registry if required with -r
 if [[ $push -eq 1 ]]; then
