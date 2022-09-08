@@ -16,8 +16,8 @@ RUN cp /usr/bin/kraken /srv/kraken/kraken
 RUN pip install --no-cache-dir -r /usr/share/monitor_kraken/requirements.txt
 
 COPY app.py /usr/lib/python2.7/dist-packages/monitor_kraken/.
-COPY run_kraken.sh /usr/src/app/run.sh
-RUN chmod +x /usr/src/app/run.sh
+COPY run_kraken.sh /usr/src/app/run_kraken.sh
+RUN chmod +x /usr/src/app/run_kraken.sh
 
 RUN ln -s /usr/lib/python*/dist-packages/monitor_kraken/app.py monitor_kraken
 
@@ -26,4 +26,4 @@ ENV KRAKEN_GENERAL_zmq_socket=tcp://*:30000
 ENV KRAKEN_GENERAL_log_level=INFO
 HEALTHCHECK CMD nc -z localhost 30000 || exit 1
 
-CMD ["bash", "/usr/src/app/run.sh"]
+CMD ["bash", "/usr/src/app/run_kraken.sh"]
