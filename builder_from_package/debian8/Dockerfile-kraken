@@ -15,7 +15,6 @@ RUN cp /usr/bin/kraken /srv/kraken/kraken
 
 RUN pip install --no-cache-dir -r /usr/share/monitor_kraken/requirements.txt
 
-COPY app.py /usr/lib/python2.7/dist-packages/monitor_kraken/.
 COPY run_kraken.sh /usr/src/app/run_kraken.sh
 RUN chmod +x /usr/src/app/run_kraken.sh
 
