@@ -22,8 +22,11 @@ RUN chmod +x /usr/src/app/run_kraken.sh
 RUN ln -s /usr/lib/python*/dist-packages/monitor_kraken/app.py monitor_kraken
 
 EXPOSE 30000
+
 ENV KRAKEN_GENERAL_zmq_socket=tcp://*:30000
 ENV KRAKEN_GENERAL_log_level=INFO
 HEALTHCHECK CMD nc -z localhost 30000 || exit 1
+
+ENV MONITOR_HOST=0.0.0.0
 
 CMD ["bash", "/usr/src/app/run_kraken.sh"]
