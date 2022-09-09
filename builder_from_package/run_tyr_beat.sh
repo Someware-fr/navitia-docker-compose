@@ -46,8 +46,6 @@ wait_for_db ${TYR_CITIES_DATABASE_HOST}
 # db migration for cities db
 upgrade_cities_db ${TYR_CITIES_DATABASE_URI}
 
-tree /ed
-
 echo "updating ed db"
 # db migration for each instance
 

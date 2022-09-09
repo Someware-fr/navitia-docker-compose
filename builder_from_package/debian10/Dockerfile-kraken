@@ -1,17 +1,26 @@
 FROM navitia/master
 
 # copy package from context inside the docker
-COPY navitia-kraken_*.deb ./
+COPY navitia-kraken_*.deb navitia-monitor-kraken_*.deb ./
 
 RUN apt-get update \
     && apt install -y ./navitia-kraken_*.deb \
+    && apt install -y curl python python-pip \
+    && apt install -y ./navitia-monitor-kraken_*.deb \
     && apt install -y netcat --autoremove \
     && apt-get clean \
-    && rm -rf navitia-kraken_*.deb
+    && rm -rf navitia-kraken_*.deb \
+    && rm -rf navitia-monitor-kraken_*.deb \
+    && pip install --no-cache-dir -r /usr/share/monitor_kraken/requirements.txt
+
+COPY run_kraken.sh /usr/src/app/run_kraken.sh
+RUN chmod +x /usr/src/app/run_kraken.sh
+
+RUN ln -s /usr/lib/python*/dist-packages/monitor_kraken/app.py monitor_kraken
 
 EXPOSE 30000
 ENV KRAKEN_GENERAL_zmq_socket=tcp://*:30000
 ENV KRAKEN_GENERAL_log_level=INFO
 HEALTHCHECK CMD nc -z localhost 30000 || exit 1
 
-CMD ["/usr/bin/kraken"]
+CMD ["bash", "/usr/src/app/run_kraken.sh"]

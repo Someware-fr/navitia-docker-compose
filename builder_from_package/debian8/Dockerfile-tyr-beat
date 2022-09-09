@@ -4,7 +4,7 @@ COPY navitia-common_*.deb ./
 COPY navitia-tyr_*.deb ./
 
 RUN apt-get update \
-    && apt install -y jq tree
+    && apt install -y jq
 
 # used for data migrations
 COPY navitia/source/sql/alembic /usr/share/navitia/ed/alembic
