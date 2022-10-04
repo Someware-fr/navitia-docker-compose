@@ -50,5 +50,7 @@ RUN tar -xf libkeepalive-0.3.tar.gz &&  \
 ENV KEEPIDLE=300
 ENV KEEPCNT=6
 ENV KEEPINTVL=30
+# if you are willing to use settings from os, set KEEPALIVE to off
+# ENV KEEPALIVE=Off
 
 CMD ["bash", "/usr/src/app/run_kraken.sh"]
