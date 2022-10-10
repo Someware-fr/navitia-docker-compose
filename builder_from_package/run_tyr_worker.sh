@@ -1,3 +1,3 @@
 #!/bin/bash
 
-celery worker -A tyr.tasks -O fair
+celery worker -A tyr.tasks -O fair -c N_PROC
