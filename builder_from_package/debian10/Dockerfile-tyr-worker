@@ -23,7 +23,7 @@ RUN cp /usr/bin/manage_tyr.py /usr/src/app/manage_tyr.py
 
 # TODO change the user to remove this ugly C_FORCE_ROOT
 ENV C_FORCE_ROOT=1
-ENV N_PROC=1
+ENV TYR_WORKER_N_PROC=1
 
 COPY run_tyr_worker.sh /usr/src/app/
 
