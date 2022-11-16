@@ -10,6 +10,12 @@ RUN  apt-get upgrade -y
 #         netcat for kraken
 #         curl for jormun
 RUN apt-get install -y postgresql-client \
-                        netcat \
-                        curl   
+        ca-certificates \
+        netcat \
+        curl
 
+COPY ca-certificates/*.crt /usr/local/share/ca-certificates/
+RUN update-ca-certificates
+# Python 'requests' package handle its own CA certificate list
+# Let's force it to use the OS's list
+ENV REQUESTS_CA_BUNDLE /etc/ssl/certs
