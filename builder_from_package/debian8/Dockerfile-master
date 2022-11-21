@@ -9,7 +9,7 @@ RUN  apt-get upgrade -y --force-yes
 # install postgresql-client for tyr-beat
 #         netcat for kraken
 #         curl for jormun
-RUN apt-get install -y postgresql-client \
+RUN apt-get install -y --force-yes postgresql-client \
         ca-certificates \
         netcat \
         curl
