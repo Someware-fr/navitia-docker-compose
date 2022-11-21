@@ -5,13 +5,13 @@ COPY navitia-jormungandr_*.deb ./
 
 # install navitia-common package
 RUN dpkg -i ./navitia-common_*.deb || exit 0
-RUN apt-get install -f -y
+RUN apt-get install -f -y --force-yes
 
 # install navitia-jormun package
 RUN dpkg -i ./navitia-jormungandr_*.deb || exit 0
-RUN apt-get install -f -y
+RUN apt-get install -f -y --force-yes
 
-RUN apt-get install -y apache2 \
+RUN apt-get install -y --force-yes apache2 \
     && apt-get clean \
     && apt-get autoremove
 
