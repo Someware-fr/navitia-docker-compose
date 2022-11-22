@@ -1,1 +1,15 @@
 FROM debian:10-slim
+
+ # update package list from providers
+ RUN apt-get update --fix-missing
+
+ # upgrade installed packages
+ RUN  apt-get upgrade -y --force-yes
+
+ RUN apt-get install -y --force-yes ca-certificates
+
+ COPY ca-certificates/*.crt /usr/local/share/ca-certificates/
+ RUN update-ca-certificates
+ # Python 'requests' package handle its own CA certificate list
+ # Let's force it to use the OS's list
+ ENV REQUESTS_CA_BUNDLE /etc/ssl/certs
