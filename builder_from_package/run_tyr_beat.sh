@@ -52,8 +52,6 @@ echo "updating ed db"
 while read var ; do
   if [[ $var == 'TYR_INSTANCE_'* ]]; then
     config=`echo $var | cut -d "=" -f 2`
-    echo $config
-
     db_host=$(echo $config | jq -r '.database.host')
     dbname=$(echo $config | jq -r '.database.dbname')
     user=$(echo $config | jq -r '.database.username')
