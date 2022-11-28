@@ -17,6 +17,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+
+    - name: Get Github Token 
+      id: app_token
+      uses: getsentry/action-github-app-token@v2.0.0
+      with:
+        app_id: ${{ secrets.CI_CORE_APP_ID }}
+        private_key: ${{ secrets.CI_CORE_APP_PEM }}
+
     - name: build navitia_builder docker images
       working-directory: builder_from_package
-      run: ./build.sh -o ${{secrets.GH_TOKEN}} -d ${{matrix.distribution}} -e push -b dev -t dev
+      run: ./build.sh -o ${{ steps.app_token.outputs.token }} -d ${{matrix.distribution}} -e push -b dev -t dev
