@@ -7,7 +7,7 @@ function show_help() {
     cat << EOF
 Usage: ${0##*/} -e event -b branch -d debian_version -o oauth_token (-f pull_request_fork) [-t tag] [-r -u dockerhub_user -p dockerhub_password]
     -e      [push|pull_request]
-    -b      [dev|release] if -e push, or the branch name if -e pull_request
+    -b      [dev|release|<tag>] if -e push, or the branch name if -e pull_request
     -f      pull_request fork owner, needed only if -e pull_request
     -o      oauth token for github
     -t      tag images with the given string
@@ -94,12 +94,12 @@ if [[ $event == "push" ]]; then
         workflow="build_navitia_packages_for_dev_multi_distribution.yml"
         archive=$navitia_package
         inside_archive=$inside_navitia_package
-    elif [[ $branch == "release" ]]; then
+    elif [[ $branch == "release" || $branch =~ v[0-9]+.[0-9]+.[0-9]+ ]]; then
         workflow="build_navitia_packages_for_release.yml"
         archive=$navitia_package
         inside_archive=$inside_navitia_package
     else
-        echo """branch must be "dev" or "release" for push events (-e push)"""
+        echo """branch must be "dev", "release" or a tag for push events (-e push)"""
         echo "***${branch}***"
         show_help
         exit 1
