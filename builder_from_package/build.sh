@@ -19,7 +19,7 @@ Usage: ${0##*/} -e event -b branch -d debian_version -o oauth_token (-f pull_req
 EOF
 }
 
-#we want to be able to interupt the build, see: http://veithen.github.io/2014/11/16/sigterm-propagation.html
+# we want to be able to interrupt the build, see: http://veithen.github.io/2014/11/16/sigterm-propagation.html
 function run() {
     trap 'kill -TERM $PID' TERM INT
     $@ &
